@@ -7,32 +7,61 @@
 
   <style>
     :root{
-      --bg:#f3f4f6;
-      --card:#ffffff;
-      --text:#1f2937;
-      --muted:#6b7280;
+      --bg:#070a10;
+      --panel:#0b111b;
+      --panel2:#0a0f18;
+      --text:#eaf2ff;
+      --muted:#a7b6cf;
+      --line:rgba(255,255,255,.12);
 
-      --purple:#7b6cff;
-      --orange:#f59e0b;
-      --green:#22c55e;
+      --accent:#ff7a18;
+      --accent2:#ffb14a;
+      --ok:#25d07f;
 
-      --radius:14px;
-      --shadow:0 18px 45px rgba(0,0,0,.10);
-      --line:#e5e7eb;
+      --radius:18px;
+      --shadow:0 24px 70px rgba(0,0,0,.55);
+      --shadow2:0 14px 36px rgba(0,0,0,.35);
+      --glow:0 0 0 1px rgba(255,122,24,.26), 0 0 55px rgba(255,122,24,.18);
     }
 
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      background: var(--bg);
       color: var(--text);
+      background:
+        radial-gradient(1100px 520px at 12% -10%, rgba(255,122,24,.16), transparent 60%),
+        radial-gradient(900px 520px at 110% 10%, rgba(255,177,74,.10), transparent 60%),
+        radial-gradient(900px 520px at 50% 120%, rgba(255,255,255,.05), transparent 60%),
+        linear-gradient(180deg, #070a0f 0%, var(--bg) 45%, #070a0f 100%);
+      overflow-x:hidden;
+    }
+
+    /* Orange Carbon (grob, gut sichtbar) */
+    .bg{
+      position:relative;
+      min-height:100%;
+    }
+    .bg::after{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      opacity:.18;
+      background-image:
+        linear-gradient(135deg, rgba(255,122,24,.10) 0 10px, rgba(0,0,0,0) 10px 20px),
+        linear-gradient(315deg, rgba(255,122,24,.08) 0 10px, rgba(0,0,0,0) 10px 20px);
+      background-size: 64px 64px; /* GROSSE Carbon-Form */
+      mix-blend-mode: screen;
+      filter: contrast(1.15);
     }
 
     .wrap{
       max-width:1100px;
       margin:0 auto;
-      padding:40px 18px 60px;
+      padding:44px 18px 70px;
+      position:relative;
+      z-index:1;
     }
 
     .top{
@@ -41,26 +70,58 @@
     }
     .top h1{
       margin:0 0 8px 0;
-      font-size:28px;
-      letter-spacing:.3px;
+      font-size:30px;
+      letter-spacing:.4px;
     }
     .top p{
       margin:0;
       color:var(--muted);
     }
 
+    .actions{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:12px 16px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(16,24,36,.55);
+      color: var(--text);
+      font-weight:800;
+      text-decoration:none;
+      box-shadow: var(--shadow2);
+      transition: transform .12s ease, border-color .12s ease;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(255,122,24,.35)}
+    .btn.primary{
+      border-color: rgba(255,122,24,.50);
+      background: linear-gradient(135deg, rgba(255,122,24,.22), rgba(255,177,74,.10));
+      box-shadow: var(--glow);
+    }
+
     .grid{
       display:grid;
       grid-template-columns: repeat(3, minmax(0,1fr));
-      gap:22px;
+      gap:18px;
       align-items:start;
+      margin-top:18px;
     }
     @media (max-width: 980px){
-      .grid{grid-template-columns:1fr; max-width:520px; margin:0 auto;}
+      .grid{grid-template-columns:1fr; max-width:540px; margin:18px auto 0;}
     }
 
     .card{
-      background: var(--card);
+      position:relative;
+      background: linear-gradient(180deg, rgba(16,24,36,.82), rgba(10,14,20,.72));
       border:1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
@@ -69,44 +130,64 @@
     }
 
     .head{
-      background: var(--purple);
-      color:#fff;
       padding:18px 12px;
-      font-weight:900;
+      font-weight:950;
       letter-spacing:1px;
-      font-size:26px;
+      font-size:22px;
       text-transform:uppercase;
+      background:
+        radial-gradient(600px 220px at 20% 0%, rgba(255,122,24,.22), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
+      border-bottom:1px solid var(--line);
+    }
+
+    .popular{
+      border-color: rgba(255,122,24,.45);
+      box-shadow: var(--glow), var(--shadow);
+    }
+    .popularTag{
+      position:absolute;
+      top:14px; right:14px;
+      font-size:11px;
+      font-weight:950;
+      letter-spacing:.3px;
+      padding:8px 10px;
+      border-radius:999px;
+      background: rgba(255,122,24,.12);
+      color:#ffd9b0;
+      border:1px solid rgba(255,122,24,.35);
+      box-shadow: 0 12px 30px rgba(255,122,24,.12);
     }
 
     .body{
-      padding:24px 22px 26px;
+      padding:22px 18px 24px;
     }
 
     .priceRow{
       display:flex;
-      align-items:flex-start;
+      align-items:flex-end;
       justify-content:center;
       gap:8px;
-      margin:10px 0 18px;
+      margin:10px 0 14px;
     }
     .currency{
-      color:#111827;
-      font-weight:900;
+      font-weight:950;
       font-size:18px;
-      margin-top:10px;
       opacity:.9;
+      margin-bottom:10px;
     }
     .price{
-      color: var(--orange);
+      color: var(--accent);
       font-weight:950;
       font-size:56px;
       line-height:1;
+      text-shadow: 0 10px 30px rgba(255,122,24,.15);
     }
     .per{
       color: var(--muted);
-      font-weight:700;
-      margin-top:26px;
-      font-size:14px;
+      font-weight:800;
+      font-size:13px;
+      margin-bottom:12px;
     }
 
     .list{
@@ -114,48 +195,77 @@
       padding:0;
       list-style:none;
       color: var(--muted);
-      font-size:15px;
-      line-height:1.6;
+      font-size:14px;
+      line-height:1.55;
+      text-align:left;
     }
     .list li{
+      display:flex;
+      gap:10px;
       padding:10px 0;
-      border-top:1px solid var(--line);
+      border-top:1px solid rgba(255,255,255,.08);
+      align-items:flex-start;
     }
     .list li:first-child{border-top:none}
-    .strong{
-      color:#111827;
-      font-weight:800;
-    }
-    .smartgen{
-      letter-spacing:.4px;
+    .tick{
+      flex:0 0 auto;
+      width:22px;height:22px;
+      border-radius:8px;
+      border:1px solid rgba(255,122,24,.28);
+      background: rgba(255,122,24,.10);
+      display:grid;place-items:center;
+      color:#ffd9b0;
+      margin-top:1px;
+      font-weight:900;
     }
 
-    .btn{
+    .cta{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      margin-top:16px;
+      flex-wrap:wrap;
+    }
+    .btnCta{
       display:inline-flex;
       align-items:center;
       justify-content:center;
       gap:10px;
-      margin-top:18px;
-      padding:12px 18px;
-      background: var(--green);
-      color:#fff;
-      font-weight:900;
-      border:none;
-      border-radius:10px;
-      cursor:pointer;
+      padding:12px 16px;
+      border-radius:14px;
+      border:1px solid rgba(255,122,24,.45);
+      background: rgba(255,122,24,.12);
+      color:#ffd9b0;
+      font-weight:950;
       text-decoration:none;
-      box-shadow: 0 12px 26px rgba(34,197,94,.22);
+      cursor:pointer;
       user-select:none;
+      box-shadow: 0 14px 34px rgba(255,122,24,.10);
+      transition: transform .12s ease;
+      min-width: 170px;
     }
-    .btn:hover{transform:translateY(-1px)}
-    .arrow{
-      font-weight:900;
-      font-size:18px;
-      line-height:1;
+    .btnCta:hover{transform: translateY(-1px)}
+    .btnCta.alt{
+      border:1px solid var(--line);
+      background: rgba(16,24,36,.55);
+      color: var(--text);
+      min-width: 170px;
     }
 
-    .note{
-      margin-top:22px;
+    .footerNote{
+      margin-top:20px;
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+    }
+    .mini{
+      opacity:.9;
+    }
+
+    .divider{
+      margin-top:26px;
+      border-top:1px solid rgba(255,255,255,.10);
+      padding-top:18px;
       text-align:center;
       color:var(--muted);
       font-size:12px;
@@ -164,88 +274,124 @@
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="top">
-      <h1>Preise & Pakete</h1>
-      <p>Wähle das passende Paket für deinen Fortschritt.</p>
-    </div>
+  <div class="bg">
+    <div class="wrap">
+      <!-- ========= KONTAKT DATEN (HIER ÄNDERN) ========= -->
+      <script>
+        // ✅ HIER EINFACH ÄNDERN:
+        const SG_PHONE = "491234567890"; // WhatsApp Nummer ohne +
+        const SG_MAIL  = "info@smartgen-akademie.de";
+      </script>
 
-    <div class="grid">
-      <!-- BASIS -->
-      <div class="card">
-        <div class="head">BASIS</div>
-        <div class="body">
-          <div class="priceRow">
-            <div class="currency">€</div>
-            <div class="price">199</div>
-            <div class="per">/monatlich</div>
-          </div>
+      <div class="top">
+        <h1>SmartGen Preise & Pakete</h1>
+        <p>Wähle das Paket, das zu deinem Level passt.</p>
 
-          <ul class="list">
-            <li>Gruppentraining (max. 4)</li>
-            <li>4 Einheiten pro Monat</li>
-            <li><span class="strong smartgen">SMARTGEN</span> Trainingsoutfit inkl. Flasche<br/>und Handtuch</li>
-          </ul>
-
-          <a class="btn" href="#kontakt">
-            JOIN NOW <span class="arrow">›</span>
-          </a>
+        <div class="actions">
+          <a class="btn primary" id="waTop" href="#">WhatsApp</a>
+          <a class="btn" id="mailTop" href="#">E-Mail</a>
         </div>
       </div>
 
-      <!-- PREMIUM -->
-      <div class="card">
-        <div class="head">PREMIUM</div>
-        <div class="body">
-          <div class="priceRow">
-            <div class="currency">€</div>
-            <div class="price">499</div>
-            <div class="per">/monatlich</div>
+      <div class="grid">
+        <!-- BASIS -->
+        <div class="card">
+          <div class="head">BASIS</div>
+          <div class="body">
+            <div class="priceRow">
+              <div class="currency">€</div>
+              <div class="price">199</div>
+              <div class="per">/monatlich</div>
+            </div>
+
+            <ul class="list">
+              <li><span class="tick">✓</span> Gruppentraining (max. 4)</li>
+              <li><span class="tick">✓</span> 4 Einheiten pro Monat</li>
+              <li><span class="tick">✓</span> SMARTGEN Trainingsoutfit inkl. Flasche & Handtuch</li>
+            </ul>
+
+            <div class="cta">
+              <a class="btnCta" id="joinBasis" href="#">Join Now ›</a>
+              <a class="btnCta alt" href="#details">Details</a>
+            </div>
           </div>
+        </div>
 
-          <ul class="list">
-            <li>Einzeltraining</li>
-            <li>8 Einheiten pro Monat</li>
-            <li>Jederzeit Zugang zum Fitnessbereich</li>
-            <li><span class="strong smartgen">SMARTGEN</span> Trainingsoutfit inkl. Flasche<br/>und Handtuch</li>
-          </ul>
+        <!-- PREMIUM -->
+        <div class="card popular">
+          <div class="popularTag">🔥 MOST POPULAR</div>
+          <div class="head">PREMIUM</div>
+          <div class="body">
+            <div class="priceRow">
+              <div class="currency">€</div>
+              <div class="price">499</div>
+              <div class="per">/monatlich</div>
+            </div>
 
-          <a class="btn" href="#kontakt">
-            JOIN NOW <span class="arrow">›</span>
-          </a>
+            <ul class="list">
+              <li><span class="tick">✓</span> Einzeltraining</li>
+              <li><span class="tick">✓</span> 8 Einheiten pro Monat</li>
+              <li><span class="tick">✓</span> Jederzeit Zugang zum Fitnessbereich</li>
+              <li><span class="tick">✓</span> SMARTGEN Trainingsoutfit inkl. Flasche & Handtuch</li>
+            </ul>
+
+            <div class="cta">
+              <a class="btnCta" id="joinPremium" href="#">Join Now ›</a>
+              <a class="btnCta alt" href="#details">Details</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ELITE -->
+        <div class="card">
+          <div class="head">ELITE</div>
+          <div class="body">
+            <div class="priceRow">
+              <div class="currency">€</div>
+              <div class="price">599</div>
+              <div class="per">/monatlich</div>
+            </div>
+
+            <ul class="list">
+              <li><span class="tick">✓</span> Einzeltraining</li>
+              <li><span class="tick">✓</span> 8 Einheiten pro Monat</li>
+              <li><span class="tick">✓</span> Jederzeit Zugang zum Fitnessbereich</li>
+              <li><span class="tick">✓</span> Datenerhebung bei Spielen (GPS)</li>
+              <li><span class="tick">✓</span> Monatliches Feedbackgespräch</li>
+              <li><span class="tick">✓</span> Trainingsplan zur individuellen Entwicklung</li>
+              <li><span class="tick">✓</span> SMARTGEN Trainingsoutfit inkl. Flasche & Handtuch</li>
+            </ul>
+
+            <div class="cta">
+              <a class="btnCta" id="joinElite" href="#">Join Now ›</a>
+              <a class="btnCta alt" href="#details">Details</a>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- ELITE -->
-      <div class="card">
-        <div class="head">ELITE</div>
-        <div class="body">
-          <div class="priceRow">
-            <div class="currency">€</div>
-            <div class="price">599</div>
-            <div class="per">/monatlich</div>
-          </div>
-
-          <ul class="list">
-            <li>Einzeltraining</li>
-            <li>8 Einheiten pro Monat</li>
-            <li>Jederzeit Zugang zum Fitnessbereich</li>
-            <li>Datenerhebung bei Spielen (GPS)</li>
-            <li>Monatliches Feedbackgespräch</li>
-            <li>Trainingsplan zur individuellen Entwicklung</li>
-            <li><span class="strong smartgen">SMARTGEN</span> Trainingsoutfit inkl. Flasche<br/>und Handtuch</li>
-          </ul>
-
-          <a class="btn" href="#kontakt">
-            JOIN NOW <span class="arrow">›</span>
-          </a>
-        </div>
+      <div id="details" class="divider">
+        <div class="mini">✅ Nächster Schritt: Ich kann dir als nächstes eine komplette SmartGen-Website daraus bauen (Hero, Programme, Galerie, Preise, Kontakt).</div>
       </div>
-    </div>
 
-    <div id="kontakt" class="note">
-      Kontakt-Link ist Demo (später bauen wir WhatsApp/E-Mail Button rein).
+      <div class="footerNote">
+        Hinweis: Buttons sind echt (WhatsApp/E-Mail). Du musst nur oben Nummer & E-Mail anpassen.
+      </div>
     </div>
   </div>
+
+  <script>
+    // Links setzen
+    const wa = "https://wa.me/" + SG_PHONE;
+    const mail = "mailto:" + SG_MAIL;
+
+    document.getElementById("waTop").href = wa;
+    document.getElementById("mailTop").href = mail;
+
+    // Join Buttons -> WhatsApp (mit Pakettext)
+    document.getElementById("joinBasis").href   = wa + "?text=" + encodeURIComponent("Hi SmartGen! Ich interessiere mich für das BASIS Paket (€199/Monat). Bitte Infos & Probetraining.");
+    document.getElementById("joinPremium").href = wa + "?text=" + encodeURIComponent("Hi SmartGen! Ich interessiere mich für das PREMIUM Paket (€499/Monat). Bitte Infos & Probetraining.");
+    document.getElementById("joinElite").href   = wa + "?text=" + encodeURIComponent("Hi SmartGen! Ich interessiere mich für das ELITE Paket (€599/Monat). Bitte Infos & Probetraining.");
+  </script>
 </body>
 </html>
