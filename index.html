@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>SMARTGEN – Hero Pick PRO (mit Upload)</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#070a0d; --panel:#0b1117; --line:#121a22;
+      --neon:#ff7a18; --cy:#1ee9ff;
+      --text:#e8eef6; --muted:#9db0c4;
+    }
+    html,body{background:var(--bg); color:var(--text); margin:0;}
+    .font-head{font-family:'Orbitron',system-ui,Segoe UI,Roboto,Arial;}
+    .font-body{font-family:'Inter',system-ui,Segoe UI,Roboto,Arial;}
+
+    .gridbg{
+      position:absolute; inset:0;
+      background:
+        radial-gradient(900px 380px at 120% -10%, #ff7a1800, #ff7a1833 35%, #0000 70%) no-repeat,
+        radial-gradient(700px 300px at -20% 110%, #1ee9ff00, #1ee9ff33 35%, #0000 70%) no-repeat,
+        linear-gradient(to bottom, #00000066, #0000 25% 75%, #00000066),
+        repeating-linear-gradient(to right, var(--line) 0 1px, #0000 1px 70px),
+        repeating-linear-gradient(to bottom, var(--line) 0 1px, #0000 1px 70px);
+      animation:gridshift 14s linear infinite;
+      pointer-events:none;
+      filter:saturate(1.1);
+    }
+    @keyframes gridshift{
+      0%{background-position:0 0,0 0,0 0,0 0,0 0}
+      100%{background-position:22px 0,-18px 0,0 0,40px 10px,0 28px}
+    }
+
+    .kenburns{background-size:110% 110%; animation:ken 18s ease-in-out infinite;}
+    @keyframes ken{
+      0%{background-position:center; transform:scale(1);}
+      50%{background-position:60% 40%; transform:scale(1.08);}
+      100%{background-position:center; transform:scale(1);}
+    }
+
+    .btn-neon{
+      background:var(--neon); color:#0a0d10;
+      border-radius:14px; padding:14px 22px;
+      font-weight:800;
+      box-shadow:0 10px 26px #ff7a1833;
+      transition:.18s ease;
+      display:inline-flex; align-items:center; justify-content:center;
+    }
+    .btn-neon:hover{ transform:translateY(-2px); box-shadow:0 14px 32px #ff7a184d;}
+
+    .glass{
+      background:linear-gradient(180deg,#ffffff1a,#ffffff0a);
+      border:1px solid #ffffff22;
+      backdrop-filter:blur(10px);
+    }
+    .badge{
+      border:1px solid #ffffff22;
+      background:#ffffff08;
+      border-radius:999px;
+      padding:.4rem .8rem;
+      font-size:.8rem;
+      color:var(--muted);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:.5rem;
+    }
+
+    /* Editor */
+    #editor{position:fixed; right:.75rem; bottom:.75rem; z-index:70;}
+    #panel{display:none;}
+    .fab{
+      width:56px; height:56px; border-radius:28px;
+      background:var(--panel);
+      border:1px solid #ffffff22;
+    }
+    .fab:active{transform:scale(.98);}
+  </style>
+</head>
+
+<body class="font-body selection:bg-orange-500/30 selection:text-white">
+
+  <!-- HERO -->
+  <header class="relative min-h-[92vh] flex items-center justify-center overflow-hidden">
+    <div id="heroImg" class="absolute inset-0 kenburns" style="background:#111 center/cover no-repeat;"></div>
+    <div class="gridbg"></div>
+
+    <div class="relative z-10 mx-auto px-6 md:px-10 w-full max-w-6xl">
+      <!-- Header -->
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img id="logoImg" alt="SmartGen Logo" class="w-12 h-12 object-contain hidden md:block"/>
+          <div>
+            <div class="font-head text-xl md:text-2xl tracking-widest" id="brandName">SMARTGEN</div>
+            <div class="text-sm text-[var(--muted)] -mt-1">FOOTBALL AKADEMIE</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Titel -->
+      <div class="mt-20 md:mt-28 text-center">
+        <h1 class="font-head text-4xl md:text-6xl leading-tight md:leading-[1.1]">
+          <span class="text-white">SmartGen Football Akademie</span><br/>
+          <span class="text-[var(--neon)]">Die Zukunft des Spiels beginnt hier</span>
+        </h1>
+
+        <p id="sloganOut" class="max-w-2xl mx-auto mt-5 text-lg text-[var(--muted)]">
+          DEIN SPIEL. DEIN WEG. DEINE ZUKUNFT.
+        </p>
+
+        <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+          <a id="ctaWhatsApp" href="#" class="btn-neon">WhatsApp schreiben</a>
+          <a id="ctaMail" href="#" class="glass px-8 py-4 rounded-xl border border-white/10">
+            E-Mail senden
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- USP Strip -->
+  <section class="py-8 border-y border-white/10 bg-[#0b1117]/70">
+    <div class="mx-auto max-w-6xl px-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+      <div class="glass rounded-xl p-4">🧠 <b>Spielintelligenz</b> – schnellere Entscheidungen</div>
+      <div class="glass rounded-xl p-4">🏃 <b>Athletik</b> – Speed, Kraft, Explosivität</div>
+      <div class="glass rounded-xl p-4">📊 <b>Analyse</b> – messbare Fortschritte</div>
+    </div>
+  </section>
+
+  <!-- Repère -->
+  <section id="repere" class="relative py-16 md:py-24">
+    <div class="mx-auto w-full max-w-6xl px-6 md:px-10">
+      <div class="text-center mb-10">
+        <span class="badge">Unser Repère</span>
+        <h2 class="font-head text-3xl md:text-4xl mt-3">
+          Alles auf <span class="text-[var(--neon)]">einem</span> Platz
+        </h2>
+        <p class="text-[var(--muted)] max-w-3xl mx-auto mt-3">
+          Half Soccer Field · Fitness & Sprint Area · Brainlab & Neurozone · Reaktionszone · Sandplatz · Kraftfläche · Analyseecke · Umkleide · Lounge
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <img id="imgPlan1" class="w-full h-60 object-cover rounded-2xl" alt="Plan/Übersicht 1"
+          src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1000&q=80"/>
+        <img id="imgHall" class="w-full h-60 object-cover rounded-2xl" alt="Halle Innen"
+          src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1000&q=80"/>
+        <img id="imgPlan2" class="w-full h-60 object-cover rounded-2xl" alt="Plan/Übersicht 2"
+          src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1000&q=80"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- Programme -->
+  <section id="programme" class="py-16 md:py-20 bg-[#0b1117]/60">
+    <div class="mx-auto w-full max-w-6xl px-6 md:px-10">
+      <div class="text-center mb-10">
+        <span class="badge">Programme</span>
+        <h2 class="font-head text-3xl md:text-4xl mt-3">Dein Spiel. Dein Weg.</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-head text-xl mb-2">Privat-Coaching (1:1)</h3>
+          <p class="text-[var(--muted)] mb-3">Technik · Abschluss · Entscheidungsfindung.</p>
+          <a href="#preise" class="btn-neon inline-block">Buchen</a>
+        </div>
+
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-head text-xl mb-2">Kleingruppen</h3>
+          <p class="text-[var(--muted)] mb-3">4–8 Spieler:innen. Intensiv & spielnah.</p>
+          <a href="#preise" class="btn-neon inline-block">Buchen</a>
+        </div>
+
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-head text-xl mb-2">Camps</h3>
+          <p class="text-[var(--muted)] mb-3">Feriencamps mit Fokus auf Intelligenz & Athletik.</p>
+          <a href="#preise" class="btn-neon inline-block">Buchen</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Preise -->
+  <section id="preise" class="py-16 md:py-20">
+    <div class="mx-auto w-full max-w-6xl px-6 md:px-10">
+      <div class="text-center mb-10">
+        <span class="badge">Preise</span>
+        <h2 class="font-head text-3xl md:text-4xl mt-3">Transparent & fair</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-head text-xl mb-2">Starter</h3>
+          <p class="text-4xl font-head text-[var(--neon)] mb-3">€199<span class="text-base text-[var(--muted)]">/Monat</span></p>
+          <ul class="text-sm text-[var(--muted)] mb-4 list-disc list-inside">
+            <li>1×/Woche Training</li><li>Basis-Analyse</li>
+          </ul>
+        </div>
+
+        <div class="glass rounded-2xl p-6 border-2 border-[var(--neon)]">
+          <h3 class="font-head text-xl mb-2">Premium</h3>
+          <p class="text-4xl font-head text-[var(--neon)] mb-3">€399<span class="text-base text-[var(--muted)]">/Monat</span></p>
+          <ul class="text-sm text-[var(--muted)] mb-4 list-disc list-inside">
+            <li>2×/Woche Training</li><li>Videoanalyse</li><li>Persönlicher Plan</li>
+          </ul>
+        </div>
+
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-head text-xl mb-2">Elite</h3>
+          <p class="text-4xl font-head text-[var(--neon)] mb-3">€599<span class="text-base text-[var(--muted)]">/Monat</span></p>
+          <ul class="text-sm text-[var(--muted)] mb-4 list-disc list-inside">
+            <li>3×/Woche Training</li><li>Neuro-/Reaktionszone</li><li>Performance-Reports</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kontakt -->
+  <section id="kontakt" class="py-16 md:py-20 bg-[#0b1117]/60">
+    <div class="mx-auto w-full max-w-4xl px-6 md:px-10 text-center">
+      <h2 class="font-head text-3xl md:text-4xl mb-3">Kontakt aufnehmen</h2>
+      <p class="text-[var(--muted)] mb-6">Frag Termine an oder sichere dir ein Probetraining.</p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a id="ctaWhatsApp2" href="#" class="btn-neon">WhatsApp schreiben</a>
+        <a id="ctaMail2" href="#" class="glass px-8 py-4 rounded-xl border border-white/10">E-Mail senden</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-10 text-center text-[var(--muted)]">
+    <p id="addressOut">📍 Frankfurt am Main</p>
+    <p class="mt-2 text-sm">©️ 2025 SmartGen Football Akademie</p>
+  </footer>
+
+  <!-- ⚙️ Editor -->
+  <div id="editor">
+    <button id="fab" class="fab flex items-center justify-center text-[var(--muted)]">⚙️</button>
+
+    <div id="panel" class="mt-2 p-3 rounded-xl glass w-[300px]">
+      <div class="text-sm font-semibold mb-2">Anpassen & Speichern</div>
+
+      <label class="text-xs block mb-1">Hero (Hallenfoto)</label>
+      <input id="heroPick" type="file" accept="image/*" class="w-full mb-3 text-xs"/>
+
+      <label class="text-xs block mb-1">Logo (Header links)</label>
+      <input id="logoPick" type="file" accept="image/*" class="w-full mb-3 text-xs"/>
+
+      <div class="grid grid-cols-3 gap-2 text-xs">
+        <div><label>Plan 1</label><input id="plan1Pick" type="file" accept="image/*" class="w-full"/></div>
+        <div><label>Halle</label><input id="hallPick" type="file" accept="image/*" class="w-full"/></div>
+        <div><label>Plan 2</label><input id="plan2Pick" type="file" accept="image/*" class="w-full"/></div>
+      </div>
+
+      <label class="text-xs block mt-2 mb-1">WhatsApp (ohne +)</label>
+      <input id="waIn" class="w-full p-2 rounded-lg text-black text-sm" placeholder="491234567890"/>
+
+      <label class="text-xs block mt-2 mb-1">E-Mail</label>
+      <input id="mailIn" class="w-full p-2 rounded-lg text-black text-sm" placeholder="info@smartgen-akademie.de"/>
+
+      <label class="text-xs block mt-2 mb-1">Adresse/Ort</label>
+      <input id="addrIn" class="w-full p-2 rounded-lg text-black text-sm" placeholder="Frankfurt am Main"/>
+
+      <label class="text-xs block mt-2 mb-1">Slogan</label>
+      <input id="sloganIn" class="w-full p-2 rounded-lg text-black text-sm" placeholder="Die Zukunft des Spiels beginnt hier"/>
+
+      <button id="saveBtn" class="btn-neon mt-3 w-full">Speichern</button>
+      <p class="text-[var(--muted)] text-[11px] mt-2">Alles wird lokal gespeichert (iPad/Handy-freundlich).</p>
+    </div>
+  </div>
+
+  <script>
+    // Panel UI
+    const fab = document.getElementById('fab');
+    const panel = document.getElementById('panel');
+    fab.addEventListener('click', () => {
+      panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+    });
+
+    // Elements
+    const heroImg = document.getElementById('heroImg');
+    const logoImg = document.getElementById('logoImg');
+
+    const imgPlan1 = document.getElementById('imgPlan1');
+    const imgHall  = document.getElementById('imgHall');
+    const imgPlan2 = document.getElementById('imgPlan2');
+
+    const heroPick = document.getElementById('heroPick');
+    const logoPick = document.getElementById('logoPick');
+    const plan1Pick = document.getElementById('plan1Pick');
+    const hallPick  = document.getElementById('hallPick');
+    const plan2Pick = document.getElementById('plan2Pick');
+
+    const waIn = document.getElementById('waIn');
+    const mailIn = document.getElementById('mailIn');
+    const addrIn = document.getElementById('addrIn');
+    const sloganIn = document.getElementById('sloganIn');
+
+    const sloganOut = document.getElementById('sloganOut');
+    const ctaWhatsApp = document.getElementById('ctaWhatsApp');
+    const ctaMail = document.getElementById('ctaMail');
+    const ctaWhatsApp2 = document.getElementById('ctaWhatsApp2');
+    const ctaMail2 = document.getElementById('ctaMail2');
+    const addressOut = document.getElementById('addressOut');
+
+    const STORAGE_KEY = 'smartgen_pro_site';
+
+    function fileToDataURL(file){
+      return new Promise((resolve) => {
+        const r = new FileReader();
+        r.onload = () => resolve(r.result);
+        r.readAsDataURL(file);
+      });
+    }
+
+    function applyState(s){
+      if(s.hero){
+        heroImg.style.backgroundImage = `url('${s.hero}')`;
+      }
+      if(s.logo){
+        logoImg.src = s.logo;
+        logoImg.classList.remove('hidden');
+      }
+      if(s.plan1) imgPlan1.src = s.plan1;
+      if(s.hall)  imgHall.src  = s.hall;
+      if(s.plan2) imgPlan2.src = s.plan2;
+
+      if(s.wa){
+        const wa = `https://wa.me/${s.wa}`;
+        ctaWhatsApp.href = wa;
+        ctaWhatsApp2.href = wa;
+        waIn.value = s.wa;
+      }
+      if(s.mail){
+        const ml = `mailto:${s.mail}`;
+        ctaMail.href = ml;
+        ctaMail2.href = ml;
+        mailIn.value = s.mail;
+      }
+      if(s.addr){
+        addressOut.textContent = `📍 ${s.addr}`;
+        addrIn.value = s.addr;
+      }
+      if(s.slogan){
+        sloganOut.textContent = s.slogan;
+        sloganIn.value = s.slogan;
+      }
+
+      // Wenn noch kein hero/logo: Panel automatisch öffnen
+      if(!s.hero || !s.logo){
+        panel.style.display = 'block';
+      }
+    }
+
+    function load(){
+      const s = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      applyState(s);
+    }
+    load();
+
+    document.getElementById('saveBtn').addEventListener('click', async () => {
+      const s = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+
+      if(heroPick.files[0]) s.hero = await fileToDataURL(heroPick.files[0]);
+      if(logoPick.files[0]) s.logo = await fileToDataURL(logoPick.files[0]);
+      if(plan1Pick.files[0]) s.plan1 = await fileToDataURL(plan1Pick.files[0]);
+      if(hallPick.files[0])  s.hall  = await fileToDataURL(hallPick.files[0]);
+      if(plan2Pick.files[0]) s.plan2 = await fileToDataURL(plan2Pick.files[0]);
+
+      if(waIn.value.trim()) s.wa = waIn.value.trim();
+      if(mailIn.value.trim()) s.mail = mailIn.value.trim();
+      if(addrIn.value.trim()) s.addr = addrIn.value.trim();
+      if(sloganIn.value.trim()) s.slogan = sloganIn.value.trim();
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+      applyState(s);
+      alert('Gespeichert ✅');
+    });
+  </script>
+
+</body>
+</html>
